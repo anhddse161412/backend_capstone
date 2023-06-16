@@ -16,6 +16,41 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `account`
+--
+
+DROP TABLE IF EXISTS `account`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `account` (
+  `accountID` mediumint NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) NOT NULL,
+  `phone` varchar(50) NOT NULL,
+  `email` varchar(50) NOT NULL,
+  `address` varchar(50) NOT NULL,
+  `image` varchar(50) NOT NULL,
+  `password` varchar(50) NOT NULL,
+  `account` varchar(50) NOT NULL,
+  `currency` varchar(50) NOT NULL,
+  `roleID` mediumint NOT NULL,
+  `status` varchar(50) NOT NULL,
+  PRIMARY KEY (`accountID`),
+  KEY `FK_account_role_idx` (`roleID`),
+  CONSTRAINT `FK_account_role` FOREIGN KEY (`roleID`) REFERENCES `role` (`roleID`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `account`
+--
+
+LOCK TABLES `account` WRITE;
+/*!40000 ALTER TABLE `account` DISABLE KEYS */;
+INSERT INTO `account` VALUES (1,'name','1212121','admin2wMAING','DAIDW','IDJAEWIFJ','F12321IIFEWF','CIBETET ','2312321',1,'true');
+/*!40000 ALTER TABLE `account` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `admin`
 --
 
@@ -136,16 +171,11 @@ DROP TABLE IF EXISTS `client`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `client` (
   `clientID` mediumint NOT NULL AUTO_INCREMENT,
-  `name` varchar(50) NOT NULL,
-  `phone` varchar(50) NOT NULL,
-  `email` varchar(50) NOT NULL,
-  `address` varchar(50) NOT NULL,
-  `image` varchar(50) NOT NULL,
-  `password` varchar(50) NOT NULL,
-  `account` varchar(50) NOT NULL,
-  `currency` varchar(50) NOT NULL,
   `status` varchar(50) NOT NULL,
-  PRIMARY KEY (`clientID`)
+  `accountID` mediumint NOT NULL,
+  PRIMARY KEY (`clientID`),
+  KEY `FK_client_account_idx` (`accountID`),
+  CONSTRAINT `FK_client_account` FOREIGN KEY (`accountID`) REFERENCES `account` (`accountID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -155,7 +185,7 @@ CREATE TABLE `client` (
 
 LOCK TABLES `client` WRITE;
 /*!40000 ALTER TABLE `client` DISABLE KEYS */;
-INSERT INTO `client` VALUES (1,'fristf ','122132131','ad@gmdie','102 maryland','not yet','dont know ','100','1999','true');
+INSERT INTO `client` VALUES (1,'',0);
 /*!40000 ALTER TABLE `client` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -238,16 +268,11 @@ DROP TABLE IF EXISTS `freelancer`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `freelancer` (
   `freelancerID` mediumint NOT NULL AUTO_INCREMENT,
-  `name` varchar(50) NOT NULL,
-  `phone` varchar(50) NOT NULL,
-  `email` varchar(50) NOT NULL,
-  `address` varchar(50) NOT NULL,
-  `image` varchar(50) NOT NULL,
-  `password` varchar(50) NOT NULL,
-  `account` varchar(50) NOT NULL,
-  `currency` varchar(50) NOT NULL,
   `status` varchar(50) NOT NULL,
-  PRIMARY KEY (`freelancerID`)
+  `accountID` mediumint NOT NULL,
+  PRIMARY KEY (`freelancerID`),
+  KEY `FK_freelancer_account_idx` (`accountID`),
+  CONSTRAINT `FK_freelancer_account` FOREIGN KEY (`accountID`) REFERENCES `account` (`accountID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -414,6 +439,31 @@ LOCK TABLES `proposal` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `role`
+--
+
+DROP TABLE IF EXISTS `role`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `role` (
+  `roleID` mediumint NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) NOT NULL,
+  `status` varchar(50) NOT NULL,
+  PRIMARY KEY (`roleID`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `role`
+--
+
+LOCK TABLES `role` WRITE;
+/*!40000 ALTER TABLE `role` DISABLE KEYS */;
+INSERT INTO `role` VALUES (1,'user','true');
+/*!40000 ALTER TABLE `role` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `sign`
 --
 
@@ -499,4 +549,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-06-14 15:54:29
+-- Dump completed on 2023-06-16 10:56:17
