@@ -23,21 +23,20 @@ DROP TABLE IF EXISTS `account`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `account` (
-  `accountID` mediumint NOT NULL AUTO_INCREMENT,
+  `accountID` int NOT NULL AUTO_INCREMENT,
   `name` varchar(50) NOT NULL,
   `phone` varchar(50) NOT NULL,
   `email` varchar(50) NOT NULL,
   `address` varchar(50) NOT NULL,
   `image` varchar(50) NOT NULL,
-  `password` varchar(50) NOT NULL,
-  `account` varchar(50) NOT NULL,
+  `password` varchar(100) NOT NULL,
   `currency` varchar(50) NOT NULL,
-  `roleID` mediumint NOT NULL,
+  `roleID` int NOT NULL,
   `status` varchar(50) NOT NULL,
   PRIMARY KEY (`accountID`),
   KEY `FK_account_role_idx` (`roleID`),
   CONSTRAINT `FK_account_role` FOREIGN KEY (`roleID`) REFERENCES `role` (`roleID`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -46,7 +45,7 @@ CREATE TABLE `account` (
 
 LOCK TABLES `account` WRITE;
 /*!40000 ALTER TABLE `account` DISABLE KEYS */;
-INSERT INTO `account` VALUES (1,'name','1212121','admin2wMAING','DAIDW','IDJAEWIFJ','F12321IIFEWF','CIBETET ','2312321',1,'true');
+INSERT INTO `account` VALUES (3,'admin1','adada`','1232131','adada','adad','$2b$10$Yt9N8e9drtGM5AH5o34RrOY9VbJsWHflDlvtQiQAJfQ03Uf5LnTei','1231231',2,'true'),(5,'user 12','asd','adads','dajsdiwj ','djqidjw ','$2b$10$TiytWaespaHYYm7FK0eYNe0XiwwDv.gnIVRlb6soOL1T4FAeH2X.6','1099',2,'true');
 /*!40000 ALTER TABLE `account` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -58,7 +57,7 @@ DROP TABLE IF EXISTS `admin`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `admin` (
-  `adminID` mediumint NOT NULL AUTO_INCREMENT,
+  `adminID` int NOT NULL AUTO_INCREMENT,
   `name` varchar(50) NOT NULL,
   `phone` varchar(50) NOT NULL,
   `email` varchar(50) NOT NULL,
@@ -83,10 +82,10 @@ DROP TABLE IF EXISTS `category`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `category` (
-  `categoryID` mediumint NOT NULL AUTO_INCREMENT,
+  `categoryID` int NOT NULL AUTO_INCREMENT,
   `name` varchar(50) NOT NULL,
   `description` varchar(50) NOT NULL,
-  `jobID` mediumint NOT NULL,
+  `jobID` int NOT NULL,
   PRIMARY KEY (`categoryID`),
   KEY `FK_category_job_idx` (`jobID`),
   CONSTRAINT `FK_category_job` FOREIGN KEY (`jobID`) REFERENCES `job` (`jobID`)
@@ -110,9 +109,9 @@ DROP TABLE IF EXISTS `category_job`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `category_job` (
-  `category_job_ID` mediumint NOT NULL AUTO_INCREMENT,
-  `categoryID` mediumint NOT NULL,
-  `jobID` mediumint NOT NULL,
+  `category_job_ID` int NOT NULL AUTO_INCREMENT,
+  `categoryID` int NOT NULL,
+  `jobID` int NOT NULL,
   PRIMARY KEY (`category_job_ID`),
   KEY `FK_category_job_job_idx` (`jobID`),
   KEY `FK_category_job_category_idx` (`categoryID`),
@@ -138,7 +137,7 @@ DROP TABLE IF EXISTS `certification`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `certification` (
-  `certificationID` mediumint NOT NULL AUTO_INCREMENT,
+  `certificationID` int NOT NULL AUTO_INCREMENT,
   `name` varchar(50) NOT NULL,
   `url` varchar(50) NOT NULL,
   `image` varchar(50) NOT NULL,
@@ -146,7 +145,7 @@ CREATE TABLE `certification` (
   `organization` varchar(50) NOT NULL,
   `certID` varchar(50) NOT NULL,
   `expiredDate` varchar(50) NOT NULL,
-  `skillID` mediumint NOT NULL,
+  `skillID` int NOT NULL,
   PRIMARY KEY (`certificationID`),
   KEY `FK_certification_skill_idx` (`skillID`),
   CONSTRAINT `FK_certification_skill` FOREIGN KEY (`skillID`) REFERENCES `skill` (`skillID`)
@@ -170,9 +169,9 @@ DROP TABLE IF EXISTS `client`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `client` (
-  `clientID` mediumint NOT NULL AUTO_INCREMENT,
+  `clientID` int NOT NULL AUTO_INCREMENT,
   `status` varchar(50) NOT NULL,
-  `accountID` mediumint NOT NULL,
+  `accountID` int NOT NULL,
   PRIMARY KEY (`clientID`),
   KEY `FK_client_account_idx` (`accountID`),
   CONSTRAINT `FK_client_account` FOREIGN KEY (`accountID`) REFERENCES `account` (`accountID`)
@@ -185,7 +184,6 @@ CREATE TABLE `client` (
 
 LOCK TABLES `client` WRITE;
 /*!40000 ALTER TABLE `client` DISABLE KEYS */;
-INSERT INTO `client` VALUES (1,'',0);
 /*!40000 ALTER TABLE `client` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -197,13 +195,13 @@ DROP TABLE IF EXISTS `commitment`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `commitment` (
-  `commitmentID` mediumint NOT NULL AUTO_INCREMENT,
+  `commitmentID` int NOT NULL AUTO_INCREMENT,
   `name` varchar(50) NOT NULL,
   `description` varchar(50) NOT NULL,
   `fileAttach` varchar(50) NOT NULL,
-  `freelancerID` mediumint NOT NULL,
-  `jobID` mediumint NOT NULL,
-  `signID` mediumint NOT NULL,
+  `freelancerID` int NOT NULL,
+  `jobID` int NOT NULL,
+  `signID` int NOT NULL,
   `status` varchar(50) NOT NULL,
   PRIMARY KEY (`commitmentID`),
   UNIQUE KEY `signID_UNIQUE` (`signID`),
@@ -232,13 +230,13 @@ DROP TABLE IF EXISTS `feedback`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `feedback` (
-  `feedbackID` mediumint NOT NULL AUTO_INCREMENT,
+  `feedbackID` int NOT NULL AUTO_INCREMENT,
   `title` varchar(50) NOT NULL,
   `createDate` varchar(50) NOT NULL,
   `lastUpdateDate` varchar(50) NOT NULL,
-  `clientID` mediumint NOT NULL,
-  `freelancerID` mediumint NOT NULL,
-  `jobApplyID` mediumint NOT NULL,
+  `clientID` int NOT NULL,
+  `freelancerID` int NOT NULL,
+  `jobApplyID` int NOT NULL,
   `status` varchar(50) NOT NULL,
   PRIMARY KEY (`feedbackID`),
   KEY `FK_feedback_freelancer_idx` (`freelancerID`),
@@ -267,9 +265,9 @@ DROP TABLE IF EXISTS `freelancer`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `freelancer` (
-  `freelancerID` mediumint NOT NULL AUTO_INCREMENT,
+  `freelancerID` int NOT NULL AUTO_INCREMENT,
   `status` varchar(50) NOT NULL,
-  `accountID` mediumint NOT NULL,
+  `accountID` int NOT NULL,
   PRIMARY KEY (`freelancerID`),
   KEY `FK_freelancer_account_idx` (`accountID`),
   CONSTRAINT `FK_freelancer_account` FOREIGN KEY (`accountID`) REFERENCES `account` (`accountID`)
@@ -293,7 +291,7 @@ DROP TABLE IF EXISTS `job`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `job` (
-  `jobID` mediumint NOT NULL AUTO_INCREMENT,
+  `jobID` int NOT NULL AUTO_INCREMENT,
   `title` varchar(50) NOT NULL,
   `description` varchar(50) NOT NULL,
   `duration` varchar(50) NOT NULL,
@@ -302,7 +300,7 @@ CREATE TABLE `job` (
   `updateDate` varchar(50) NOT NULL,
   `endDate` varchar(50) NOT NULL,
   `fee` varchar(50) NOT NULL,
-  `clientID` mediumint NOT NULL,
+  `clientID` int NOT NULL,
   `status` varchar(50) NOT NULL,
   PRIMARY KEY (`jobID`),
   KEY `FK_job_clients_idx` (`clientID`),
@@ -316,7 +314,6 @@ CREATE TABLE `job` (
 
 LOCK TABLES `job` WRITE;
 /*!40000 ALTER TABLE `job` DISABLE KEYS */;
-INSERT INTO `job` VALUES (1,'helo','first one','133','large','12-2-2003','14-6-2023','23-4-2005','100',1,'aliveclient'),(3,'helosssss','first one','133','large','14-6-2023','14-6-2023','23-4-2005','100',1,'aliveclient');
 /*!40000 ALTER TABLE `job` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -328,10 +325,10 @@ DROP TABLE IF EXISTS `jobapply`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `jobapply` (
-  `jobApplyID` mediumint NOT NULL AUTO_INCREMENT,
+  `jobApplyID` int NOT NULL AUTO_INCREMENT,
   `timeApply` varchar(50) NOT NULL,
-  `proposalID` mediumint NOT NULL,
-  `jobID` mediumint NOT NULL,
+  `proposalID` int NOT NULL,
+  `jobID` int NOT NULL,
   `status` varchar(50) NOT NULL,
   PRIMARY KEY (`jobApplyID`),
   KEY `FK_jobapply_job_idx` (`jobID`),
@@ -358,10 +355,10 @@ DROP TABLE IF EXISTS `major`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `major` (
-  `majorID` mediumint NOT NULL AUTO_INCREMENT,
+  `majorID` int NOT NULL AUTO_INCREMENT,
   `name` varchar(50) NOT NULL,
   `description` varchar(50) NOT NULL,
-  `freelancerID` mediumint NOT NULL,
+  `freelancerID` int NOT NULL,
   PRIMARY KEY (`majorID`),
   KEY `FK_major_freelancer_idx` (`freelancerID`),
   CONSTRAINT `FK_major_freelancer` FOREIGN KEY (`freelancerID`) REFERENCES `freelancer` (`freelancerID`)
@@ -385,12 +382,12 @@ DROP TABLE IF EXISTS `payment`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `payment` (
-  `paymentID` mediumint NOT NULL AUTO_INCREMENT,
+  `paymentID` int NOT NULL AUTO_INCREMENT,
   `type` varchar(50) NOT NULL,
   `fee` varchar(50) NOT NULL,
   `time` varchar(50) NOT NULL,
-  `clientID` mediumint NOT NULL,
-  `freelancerID` mediumint NOT NULL,
+  `clientID` int NOT NULL,
+  `freelancerID` int NOT NULL,
   `status` varchar(50) NOT NULL,
   PRIMARY KEY (`paymentID`),
   KEY `FK_payment_freelancer_idx` (`freelancerID`),
@@ -417,11 +414,11 @@ DROP TABLE IF EXISTS `proposal`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `proposal` (
-  `proposalID` mediumint NOT NULL AUTO_INCREMENT,
+  `proposalID` int NOT NULL AUTO_INCREMENT,
   `description` varchar(50) NOT NULL,
   `fileAttach` varchar(50) NOT NULL,
   `sendDate` varchar(50) NOT NULL,
-  `freelancerID` mediumint NOT NULL,
+  `freelancerID` int NOT NULL,
   `status` varchar(50) NOT NULL,
   PRIMARY KEY (`proposalID`),
   KEY `FK_proposal_freelancer_idx` (`freelancerID`),
@@ -446,11 +443,11 @@ DROP TABLE IF EXISTS `role`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `role` (
-  `roleID` mediumint NOT NULL AUTO_INCREMENT,
+  `roleID` int NOT NULL AUTO_INCREMENT,
   `name` varchar(50) NOT NULL,
   `status` varchar(50) NOT NULL,
   PRIMARY KEY (`roleID`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -459,7 +456,7 @@ CREATE TABLE `role` (
 
 LOCK TABLES `role` WRITE;
 /*!40000 ALTER TABLE `role` DISABLE KEYS */;
-INSERT INTO `role` VALUES (1,'user','true');
+INSERT INTO `role` VALUES (2,'user','true'),(3,'freelancer','true');
 /*!40000 ALTER TABLE `role` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -471,7 +468,7 @@ DROP TABLE IF EXISTS `sign`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `sign` (
-  `signID` mediumint NOT NULL AUTO_INCREMENT,
+  `signID` int NOT NULL AUTO_INCREMENT,
   `date` varchar(50) NOT NULL,
   PRIMARY KEY (`signID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -494,11 +491,11 @@ DROP TABLE IF EXISTS `skill`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `skill` (
-  `skillID` mediumint NOT NULL AUTO_INCREMENT,
+  `skillID` int NOT NULL AUTO_INCREMENT,
   `name` varchar(50) NOT NULL,
   `description` varchar(50) NOT NULL,
   `duration` varchar(50) NOT NULL,
-  `majorID` mediumint NOT NULL,
+  `majorID` int NOT NULL,
   PRIMARY KEY (`skillID`),
   KEY `FK_skill_major_idx` (`majorID`),
   CONSTRAINT `FK_skill_major` FOREIGN KEY (`majorID`) REFERENCES `major` (`majorID`)
@@ -522,10 +519,10 @@ DROP TABLE IF EXISTS `subcategory`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `subcategory` (
-  `subCategoryID` mediumint NOT NULL AUTO_INCREMENT,
+  `subCategoryID` int NOT NULL AUTO_INCREMENT,
   `name` varchar(50) NOT NULL,
   `description` varchar(50) NOT NULL,
-  `categoryID` mediumint NOT NULL,
+  `categoryID` int NOT NULL,
   PRIMARY KEY (`subCategoryID`),
   KEY `FK_subCategory_category_idx` (`categoryID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -549,4 +546,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-06-16 10:56:17
+-- Dump completed on 2023-06-17 19:12:11

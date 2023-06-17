@@ -101,9 +101,8 @@ exports.updateJobById = async (req, res, next) => {
          clientID,
          status
       );
-      console.log("controller");
-      console.log(updateJob);
-      await Job.updateById(jobId, updateJob);
+      let a = await Job.updateById(jobId, updateJob);
+      console.log(a);
       res.status(200).json({ message: "Job updated" });
    } catch (error) {
       next(error);

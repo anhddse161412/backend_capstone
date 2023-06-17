@@ -79,8 +79,6 @@ class Job {
    }
 
    static updateById(jobId, job) {
-      console.log("model");
-      console.log(job);
       let sql = `UPDATE job SET 
       title = ?,
       description = ?,
